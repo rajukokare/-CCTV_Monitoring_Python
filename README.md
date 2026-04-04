@@ -5,10 +5,10 @@ I am owner of this project.
 <br>
 * 14 cameras had to be checked manually every three hours.
 <br>
-*Due to human error, the data was not consistently accurate.
+* Due to human error, the data was not consistently accurate.
 <br>
 * It was not possible to determine the exact time when a camera had stopped working.
-* <br>
+<br>
 # The solution is (What I do:)
 <br>
 * Automation: Automated the "ping" process using Python.
