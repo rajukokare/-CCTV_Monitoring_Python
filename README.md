@@ -47,3 +47,8 @@ I developed an automation system using Python that:
 - WhatsApp / Email Alerts for offline cameras  
 - Live dashboard integration (Power BI)  
 - Real-time monitoring system
+
+## 🎓 Learning
+
+- Currently pursuing Google IT Automation with Python (Coursera)
+- Completed: Crash Course on Python
