@@ -2,6 +2,8 @@ import os
 import csv
 import time
 from datetime import datetime
+import smtplib
+from email.message import EmailMessage
 
 # List of CCTV cameras (Replace with actual camera names and IP addresses)
 cams = [
@@ -23,6 +25,19 @@ cams = [
     {"name": "PTZ_360", "ip": "192.168.1.30"},
     {"name": "ADMIN_AREA_OUTSIDE", "ip": "192.168.1.31"},
 ]
+def send_alert(camera_name,camera_ip):
+    msg=EmailMessage()
+    msg.set_content(f"Alert! Your CCTV '{camera_name}' (ip:{camera_ip}) is offline, check immidiate..")
+    msg['From'] = "kokare.raju@gmail.com"
+    msg['To'] = "kokare.raju@gmail.com"
+
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login("kokare.raju@gmail.com", "yuwvlepdflqucdqr")
+        server.send_message(msg)
+        server.quit()
+    except Exception as e :
+        print (f"I am try to mail but I have some trouble to send you a mail:{e}")
 
 def run_camera_check():
     file_name = "CCTV_Daily_Report_git.csv"
@@ -45,7 +60,11 @@ def run_camera_check():
             response = os.system(f"ping -n 1 -w 1000 {c['ip']} > nul")
             
             # Determine camera status based on ping response
-            status = "ONLINE" if response == 0 else "OFFLINE"
+            if response == 0:
+                status = "ONLINE"
+            else:
+                status = "OFFLINE"
+                send_alert(c['name'], c['ip']) # if camera is offline alert me.
             
             # Write the result to CSV file
             writer.writerow([now, c['name'], c['ip'], status])
